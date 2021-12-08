@@ -28,6 +28,9 @@ else
   sed -r -i "s@^#?inter.broker.listener.name=.*@inter.broker.listener.name=$KAFKA_INTER_BROKER_LISTENER_NAME@g" "/opt/kafka/config/kraft/server.properties"
 fi
 
-uuid=$(/opt/kafka/bin/kafka-storage.sh random-uuid)
-/opt/kafka/bin/kafka-storage.sh format -t $uuid -c /opt/kafka/config/kraft/server.properties
+if [[ -z "$KAFKA_SKIP_STORAGE_FORMAT" ]]; then
+  uuid=$(/opt/kafka/bin/kafka-storage.sh random-uuid)
+  /opt/kafka/bin/kafka-storage.sh format -t $uuid -c /opt/kafka/config/kraft/server.properties
+fi
+
 /opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/kraft/server.properties
