@@ -1,5 +1,5 @@
 FROM alpine:3.14 AS builder
-ENV KAFKA_VERSION=3.0.0
+ENV KAFKA_VERSION=3.1.1
 ENV SCALA_VERSION=2.13
 COPY install_kafka.sh /bin/
 RUN apk update \
