@@ -1,14 +1,9 @@
 #!/usr/bin/env bash
 
-path=/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz
+downloadUrl="https://downloads.apache.org/kafka/$KAFKA_VERSION/kafka_$SCALA_VERSION-$KAFKA_VERSION.tgz"
 
-downloadUrl=$(curl --stderr /dev/null "https://www.apache.org/dyn/closer.cgi?path=${path}&as_json=1" | jq -r '"\(.preferred)\(.path_info)"')
 
-if [[ ! $(curl -sfI "${downloadUrl}") ]]; then
-    downloadUrl="https://archive.apache.org/dist/${path}"
-fi
-
-wget "${downloadUrl}" -O "/tmp/kafka.tgz"
+curl -L "${downloadUrl}" > "/tmp/kafka.tgz"
 
 tar xfz /tmp/kafka.tgz -C /opt
 
